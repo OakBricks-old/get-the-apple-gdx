@@ -1,9 +1,5 @@
 package oakbricks.opengts.desktop;
 
-import blue.endless.jankson.Jankson;
-import blue.endless.jankson.JsonObject;
-import blue.endless.jankson.JsonPrimitive;
-import blue.endless.jankson.api.SyntaxError;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -12,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.nio.file.FileSystems;
 
 import static oakbricks.opengts.Main.version;
 import static oakbricks.opengts.desktop.Consts.userDirString;
@@ -32,49 +27,11 @@ public class DesktopLauncher {
 		LOGGER.info("nice");
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		LOGGER.warn(userDirString);
-		File f = new File(userDirString, "config.json5");
+		File f = new File(userDirString, "config.json");
 		if (!f.exists() || f.isDirectory()) {
-
-			File configFile = new File(Consts.userDirString + FileSystems.getDefault().getSeparator() + "test.json");
-			Jankson jankson = Jankson.builder().build();
-			String result = jankson
-					.toJson("new ConfigObject()") //The first call makes a JsonObject
-					.toJson(true, true, 0);     //The second turns the JsonObject into a String -
-			//in this case, preserving comments and pretty-printing with newlines
-			try {
-				if(!configFile.exists()) configFile.createNewFile();
-				FileOutputStream out = new FileOutputStream(configFile, false);
-
-				out.write(result.getBytes());
-				out.flush();
-				out.close();
-
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			LOGGER.info("JSON config not loaded/does not exist! Creating a new one!");
 		} else {
-			LOGGER.info("JSON File Loaded!");
-			try {
-				JsonObject configObject = Jankson
-						.builder()
-						.build()
-						.load(new File("config.json5"));
-
-				//This will strip comments and regularize the file, but emit newlines and indents for readability
-				String processed = configObject.toJson(false, true);
-
-				//This will inject a default setting after the last listed key in the object, if it doesn't already exist.
-				//Otherwise it does nothing to the comment, ordering, or value.
-				configObject.putDefault("test1", new JsonPrimitive(Boolean.TRUE), "test for booleans");
-
-			} catch (IOException ex) {
-				LOGGER.error("Couldn't read the config file", ex);
-				return; //or System.exit(-1) or rethrow an exception
-			} catch (SyntaxError error) {
-				LOGGER.error(error.getMessage());
-				LOGGER.error(error.getLineMessage());
-				return; //or System.exit(-1) or rethrow an exception
-			}
+			LOGGER.info("JSON Condig file loaded!");
 		}
 		LOGGER.warn("test");
 	}

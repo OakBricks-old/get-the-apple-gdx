@@ -111,7 +111,7 @@ Thumbs.db
 !/ios/xcode/*.xcodeproj/xcshareddata
 !/ios/xcode/*.xcodeproj/project.pbxproj
 /ios/xcode/native/
-/ios/IOSLauncher.app
+/ios/IOSLauncher.appw
 /ios/IOSLauncher.app.dSYM
 
 #testing
