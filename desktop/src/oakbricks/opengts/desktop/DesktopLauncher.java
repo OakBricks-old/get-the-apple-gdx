@@ -22,29 +22,6 @@ public class DesktopLauncher {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	public static void main (String[] arg) {
-
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(
-					new InputStreamReader(getAssets().open("filename.txt")));
-
-			// do reading, usually loop until end of file reading
-			String mLine;
-			while ((mLine = reader.readLine()) != null) {
-				//process line
-			}
-		} catch (IOException e) {
-			//log the exception
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					//log the exception
-				}
-			}
-		}
-
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "Get The Apple! " + version + " - OpenSource";
 		config.addIcon("iconWindow.png", Files.FileType.Internal);
