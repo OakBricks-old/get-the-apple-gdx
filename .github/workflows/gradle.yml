@@ -25,3 +25,13 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        # Artifact name
+        name: gta-gdx
+        # A file, directory or wildcard pattern that describes what to upload
+        path: /
+        if-no-files-found: warn
+        retention-days: 90 # optional
+        
